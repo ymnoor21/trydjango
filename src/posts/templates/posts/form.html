@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ title }}</title>
+    </head>
+    <body>
+        <form method="POST"
+            {% if cmd == 'create' %}
+                action="{% url 'posts:create' %}"
+            {% else %}
+                action="{% url 'posts:edit' instance.id %}"
+            {% endif %}>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" {% if cmd == 'create' %} value="Create" {% else %} value="Update" {% endif %}/>
+        </form>
+        <p><a href="{% url 'posts:list' %}">List</a> {% if cmd == 'edit' %} | <a href="{% url 'posts:detail' instance.id %}">Detail</a>{% endif %}</p>
+    </body>
+</html>

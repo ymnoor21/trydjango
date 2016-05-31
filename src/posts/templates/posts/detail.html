@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Post Details</title>
+    </head>
+    <body>
+        <h1>Details: {{ post.id }}</h1>
+        <ul>
+            <li>{{ post.title }}</li>
+            <li>{{ post.content }}</li>
+            <li>{{ post.updated_at }}</li>
+            <li>{{ post.created_at }}</li>
+        </ul>
+
+        <p><a href="{% url 'posts:list' %}">List</a> | <a href="{% url 'posts:edit' post.id %}">Edit</a></p>
+    </body>
+</html>
