@@ -32,8 +32,7 @@ def post_create(request):
         instance = form.save(commit=False)
         instance.save()
 
-        return HttpResponseRedirect(reverse('posts:detail', args=[instance.id]))
-
+        return HttpResponseRedirect(reverse('posts:detail', kwargs={"id": instance.id}))
 
     context = {
         "form": form,
@@ -51,6 +50,8 @@ def post_edit(request, id=None):
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
+
+        return HttpResponseRedirect(reverse('posts:detail', kwargs={"id": instance.id}))
 
     context = {
         "form": form,
