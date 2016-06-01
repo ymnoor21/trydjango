@@ -1,25 +1,28 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post
 from .forms import PostForm
 from django.core.urlresolvers import reverse
 
 
 def post_list(request):
-    queryset = Post.objects.all()
+    posts = Post.objects.all()
 
     context = {
-        "all_posts": queryset
+        "title": "Posts List",
+        "posts": posts
     }
 
     return render(request, "posts/list.html", context)
 
 
-def post_detail(request, id):
-    queryset = get_object_or_404(Post, id=id)
+def post_detail(request, id=None):
+    post = get_object_or_404(Post, id=id)
 
     context = {
-        "post": queryset
+        "title": "Post Detail",
+        "post": post
     }
 
     return render(request, "posts/detail.html", context)
@@ -32,7 +35,10 @@ def post_create(request):
         instance = form.save(commit=False)
         instance.save()
 
-        return HttpResponseRedirect(reverse('posts:detail', kwargs={"id": instance.id}))
+        messages.success(request, "Post created successfully.")
+        return HttpResponseRedirect(
+            reverse('posts:detail', kwargs={"id": instance.id})
+        )
 
     context = {
         "form": form,
@@ -51,17 +57,23 @@ def post_edit(request, id=None):
         instance = form.save(commit=False)
         instance.save()
 
-        return HttpResponseRedirect(reverse('posts:detail', kwargs={"id": instance.id}))
+        messages.success(request, "Post saved successfully.")
+        return HttpResponseRedirect(
+            reverse('posts:detail', kwargs={"id": instance.id})
+        )
 
     context = {
         "form": form,
         "title": instance.title,
-        "instance": instance,
+        "post": instance,
         "cmd": "edit",
     }
 
     return render(request, "posts/form.html", context)
 
 
-def post_delete(request):
-    return HttpResponse("<h1>Delete</h1>")
+def post_delete(request, id=None):
+    instance = get_object_or_404(Post, id=id)
+    instance.delete()
+    messages.success(request, "Post deleted.")
+    return redirect("posts:list")

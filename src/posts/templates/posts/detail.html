@@ -1,17 +1,17 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Post Details</title>
-    </head>
-    <body>
-        <h1>Details: {{ post.id }}</h1>
-        <ul>
-            <li>{{ post.title }}</li>
-            <li>{{ post.content }}</li>
-            <li>{{ post.updated_at }}</li>
-            <li>{{ post.created_at }}</li>
-        </ul>
+{% extends "posts/base.html" %}
 
-        <p><a href="{% url 'posts:list' %}">List</a> | <a href="{% url 'posts:edit' post.id %}">Edit</a></p>
-    </body>
-</html>
+{% block head_title %}
+    Post Detail | {{ block.super }}
+{% endblock %}
+
+{% block content %}
+            <h1>Post Details: {{ post.id }}</h1>
+            <ul>
+                <li>{{ post.title }}</li>
+                <li>{{ post.content }}</li>
+                <li>{{ post.updated_at }}</li>
+                <li>{{ post.created_at }}</li>
+            </ul>
+
+            <p><a href="{% url 'posts:list' %}">List</a> | <a href="{% url 'posts:edit' post.id %}">Edit</a> | <a href="{% url 'posts:delete' post.id %}">Delete</a></p>
+{% endblock content %}

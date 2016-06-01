@@ -1,37 +1,33 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>All posts</title>
-    </head>
-    <body>
-        <h1>Posts List</h1>
-        <p><a href="{% url 'posts:create' %}">Create New</a></p>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Content</th>
-                    <th>Update</th>
-                    <th>Created</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for obj in all_posts %}
-                <tr>
-                    <td>{{ obj.id }}</td>
-                    <td>{{ obj.title }}</td>
-                    <td>{{ obj.content }}</td>
-                    <td>{{ obj.updated_at }}</td>
-                    <td>{{ obj.created_at }}</td>
-                    <td>
-                        <a href="{% url 'posts:detail' obj.id %}">Detail</a> |
-                        <a href="{% url 'posts:edit' obj.id %}">Edit</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </body>
-</html>
+{% extends "posts/base.html" %}
+
+{% block content%}
+            <h1>Posts List</h1>
+            <p><a href="{% url 'posts:create' %}">Create New</a></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>Update</th>
+                        <th>Created</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for post in posts %}
+                    <tr>
+                        <td>{{ post.id }}</td>
+                        <td>{{ post.title }}</td>
+                        <td>{{ post.content }}</td>
+                        <td>{{ post.updated_at }}</td>
+                        <td>{{ post.created_at }}</td>
+                        <td>
+                            <a href="{% url 'posts:detail' post.id %}">Detail</a> |
+                            <a href="{% url 'posts:edit' post.id %}">Edit</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+{% endblock content %}
