@@ -30,8 +30,8 @@ def post_list(request):
     return render(request, "posts/list.html", context)
 
 
-def post_detail(request, id=None):
-    post = get_object_or_404(Post, id=id)
+def post_detail(request, slug=None):
+    post = get_object_or_404(Post, slug=slug)
 
     context = {
         "title": "Post Detail",
@@ -50,7 +50,7 @@ def post_create(request):
 
         messages.success(request, "Post created successfully.")
         return HttpResponseRedirect(
-            reverse('posts:detail', kwargs={"id": instance.id})
+            reverse('posts:detail', kwargs={"slug": instance.slug})
         )
 
     context = {
@@ -62,8 +62,8 @@ def post_create(request):
     return render(request, "posts/form.html", context)
 
 
-def post_edit(request, id=None):
-    instance = get_object_or_404(Post, id=id)
+def post_edit(request, slug=None):
+    instance = get_object_or_404(Post, slug=slug)
     form = PostForm(
         request.POST or None,
         request.FILES or None,
@@ -76,7 +76,7 @@ def post_edit(request, id=None):
 
         messages.success(request, "Post saved successfully.")
         return HttpResponseRedirect(
-            reverse('posts:detail', kwargs={"id": instance.id})
+            reverse('posts:detail', kwargs={"slug": instance.slug})
         )
 
     context = {
@@ -89,8 +89,8 @@ def post_edit(request, id=None):
     return render(request, "posts/form.html", context)
 
 
-def post_delete(request, id=None):
-    instance = get_object_or_404(Post, id=id)
+def post_delete(request, slug=None):
+    instance = get_object_or_404(Post, slug=slug)
     instance.delete()
     messages.success(request, "Post deleted.")
     return redirect("posts:list")

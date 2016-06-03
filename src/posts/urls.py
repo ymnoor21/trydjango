@@ -20,8 +20,8 @@ from posts import views
 
 urlpatterns = [
     url(r'^$', views.post_list, name='list'),
-    url(r'^post/(?P<id>\d+)/detail/$', views.post_detail, name='detail'),
+    url(r'^post/(?P<slug>[A-Za-z0-9_-]+)/detail/$', views.post_detail, name='detail'),
     url(r'^post/create/$', views.post_create, name='create'),
-    url(r'^post/(?P<id>\d+)/edit/$', views.post_edit, name='edit'),
-    url(r'^post/(?P<id>\d+)/delete/$', views.post_delete, name='delete'),
+    url(r'^post/(?P<slug>[A-Za-z0-9_-]+)/edit/$', views.post_edit, name='edit'),
+    url(r'^post/(?P<slug>[A-Za-z0-9_-]+)/delete/$', views.post_delete, name='delete'),
 ]
